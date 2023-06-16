@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang = "en">
+  
+    <head>
+
+        <meta charset = "UTF-8" />
+        <meta http-equiv = "X-UA-Compatible" content = "IE=edge" />
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0" />
+        <title>Search Automation</title>
+
+    </head>
+
+    <body>
+
+        <p id="text">Sample</p>
+        <p>No.of Searches to be done : </p><p id = "currentsSearch">0</p>
+        
+        <script>
+
+            let myarray = [] ;
+
+            function contentGenerator() 
+            {
+                let randomString = "" ;
+                const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" ;
+                let randomLength = getRandom(5, 10) ;
+
+                for (let i = 0 ; i < randomLength ; i++) 
+                {
+                    randomString += characters.charAt(
+                        Math.floor(Math.random() * characters.length)
+                    ) ;
+                }
+
+                const randomNumber = Math.floor(Math.random() * 100) + 1 ;
+                randomString += randomNumber.toString() ;
+                
+                return randomString ;
+            }
+
+            function getRandom(lower, upper) 
+            {
+                return Math.floor(Math.random() * (upper - lower + 1)) + lower ;
+            }
+
+            var url = "https://www.bing.com/search?q=" ;
+            let currentsSearch = document.getElementById("currentsSearch") ;
+            
+            for (let i = 0 ; i < 43 ; i++) 
+            {
+                myarray[i] = contentGenerator() ;
+            }
+
+            var i = 41 ;
+            
+            if (i >= 0) 
+            {
+                var interval = setInterval(() => {
+                    
+                    window.open(url + myarray[i]) ;
+                    i-- ;
+                    currentsSearch.innerHTML = i ;
+                    
+                    if (i < 0) 
+                    {
+                        clearInterval(interval) ;
+                        let text = document.getElementById("text") ;
+                        text.innerHTML = "Done" ;
+                    }
+                }, getRandom(1, 4) * 1000) ;
+            }
+
+        </script>
+
+    </body>
+
+</html>
